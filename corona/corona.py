@@ -12,7 +12,7 @@ from libs.path import Path
 from libs.progressbar import ProgressBar
 from libs.threading import Threads
 
-output_folder = Path(__file__).parent.parent / "assets"
+output_folder = Path.docs / "Other" / Path(__file__).parent.name
 output_folder.mkdir(parents=True, exist_ok=True)
 
 def get_dict(data, key):
