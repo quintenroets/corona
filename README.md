@@ -1,4 +1,4 @@
-# corona
+# Corona
 
 Script to visualize the current pandemic situation in Belgium.
 
@@ -9,12 +9,12 @@ Based on the visualization provided by [sciensano](https://covid-19.sciensano.be
 
 The images below compare the script and sciensano visualization of the number of Covid cases in the same period (01/03/2020 - 29/12/2021). While the Sciensano visualization gives the impression of a comfortable downward trend, the script visualization already shows the beginning of an upward trend, caused by the Omicron variant. In the sciensano visualization, the peaks seem to come out of nowhere, but in the script visualization their buildup is visualized more clearly.
 
+# Script 
+
+![Alt text](examples/out.png?raw=true)
+
 # Sciensano 
 
 taken from [here](http://covid-19.sciensano.be/sites/default/files/Covid19/COVID-19_Daily%20report_20211229%20-%20NL.pdf)
 
 ![Alt text](examples/sciensano.png?raw=true)
-
-# Script 
-
-![Alt text](examples/out.png?raw=true)
