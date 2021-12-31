@@ -13,6 +13,8 @@ The images below compare the script visualization and sciensano visualization on
 
 ![Alt text](examples/out.png?raw=true)
 
-# [sciensano](http://covid-19.sciensano.be/sites/default/files/Covid19/COVID-19_Daily%20report_20211229%20-%20NL.pdf)
+# Sciensano 
+
+taken from [here](http://covid-19.sciensano.be/sites/default/files/Covid19/COVID-19_Daily%20report_20211229%20-%20NL.pdf)
 
 ![Alt text](examples/sciensano.png?raw=true)
