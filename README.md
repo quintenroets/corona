@@ -7,9 +7,12 @@ Based on the visualization provided by [sciensano](https://covid-19.sciensano.be
 * Customizable date range
 * Option to visualize situation in specific province only
 
-The images below show an example of the visualization of the script and sciensano on the same day (30/12/2021):
+The images below compare the script visualization and sciensano visualization on the same day (29/12/2021):
+
+# Script 
 
 ![Alt text](examples/out.png?raw=true)
 
+# [sciensano](http://covid-19.sciensano.be/sites/default/files/Covid19/COVID-19_Daily%20report_20211229%20-%20NL.pdf)
 
 ![Alt text](examples/sciensano.png?raw=true)
