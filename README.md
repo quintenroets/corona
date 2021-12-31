@@ -9,4 +9,7 @@ Based on the visualization provided by [sciensano](https://covid-19.sciensano.be
 
 The images below show an example of the visualization of the script and sciensano on the same day (30/12/2021):
 
-![Alt text](examples/out.png?raw=true "Title")
+![Alt text](examples/out.png?raw=true)
+
+
+![Alt text](examples/sciensano.png?raw=true)
