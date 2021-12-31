@@ -20,7 +20,7 @@ setup(
     install_requires=read("requirements.txt"),
     entry_points={
         "console_scripts": [
-            "corona = corona.corona:main"
+            "corona = corona.main:main"
             ]
         },
 )
