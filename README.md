@@ -7,7 +7,7 @@ Based on the visualization provided by [sciensano](https://covid-19.sciensano.be
 * Customizable date range
 * Option to visualize situation in specific province only
 
-The images below compare the script visualization and sciensano visualization of the number of Covid cases on the same day (29/12/2021). While the Sciensano visualization gives the impression of a comfortable downward trend, the script visualization already shows the beginning of an upward trend, caused by the Omicron variant. In the sciensano visualization, the peaks seem to come out of nowhere, whereas the script visualization better visualizes the buildup of the peaks.
+The images below compare the script and sciensano visualization of the number of Covid cases in the same period (01/03/2020 - 29/12/2021). While the Sciensano visualization gives the impression of a comfortable downward trend, the script visualization already shows the beginning of an upward trend, caused by the Omicron variant. In the sciensano visualization, the peaks seem to come out of nowhere, but in the script visualization their buildup is visualized more clearly.
 
 # Sciensano 
 
