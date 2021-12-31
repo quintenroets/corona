@@ -13,7 +13,7 @@ The images below compare the script visualization and sciensano visualization of
 
 taken from [here](http://covid-19.sciensano.be/sites/default/files/Covid19/COVID-19_Daily%20report_20211229%20-%20NL.pdf)
 
-![Alt text](examples/out.png?raw=true)
+![Alt text](examples/sciensano.png?raw=true)
 
 # Script 
 
