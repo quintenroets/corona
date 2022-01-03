@@ -3,10 +3,10 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mticker
 import numpy as np
+from path import Path
 import requests
 
 from libs.cli import Cli
-from libs.path import Path
 from libs.progressbar import ProgressBar
 from libs.threading import Threads
 
