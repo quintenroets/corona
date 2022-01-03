@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mticker
 import numpy as np
-from path import Path
+from plib import Path
 import requests
 
 from libs.cli import Cli
