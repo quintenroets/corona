@@ -52,8 +52,11 @@ class Visualizer:
             "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
             "https://covid-vaccinatie.be/en",
         ]
-        command = " ".join(["xdg-open"] + urls)
-        Cli.run(command, wait=False)
+        if Cli.get("which chromium", check=False):
+            Cli.run("chromium " + " ".join(urls), wait=False)
+        else:
+            for url in urls:
+                Path.start(url)
 
     def make_visualization(self, title, values):
         x = list(values.keys())
