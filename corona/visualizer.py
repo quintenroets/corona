@@ -55,8 +55,7 @@ class Visualizer:
         if Cli.get("which chromium", check=False):
             Cli.run("chromium " + " ".join(urls), wait=False)
         else:
-            for url in urls:
-                Path.start(url)
+            Cli.start(urls)
 
     def make_visualization(self, title, values):
         x = list(values.keys())
