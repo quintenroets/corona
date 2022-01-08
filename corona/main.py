@@ -10,7 +10,6 @@ def main():
     parser = argparse.ArgumentParser(description='Visualize pandemic situation in Belgium')
     parser.add_argument('--start-date', default=default_start, help=f'Start of date range to visualize (default={default_start})')    
     parser.add_argument('--province', default=None, help='Only visualize specified province if specified [WestVlaanderen, ..]')
-    parser.add_argument('--output-folder', default=None, help='Output folder for generated files')
     args = parser.parse_args()
     
     with ErrorHandler():

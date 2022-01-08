@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mticker
 import numpy as np
-from plib import Path
+from plib import Path as BasePath
 import requests
 
 from libs.cli import Cli
@@ -11,11 +11,17 @@ from libs.progressbar import ProgressBar
 from libs.threading import Threads
 
 
+class Path(BasePath):
+    output = BasePath.docs / "Other" / "corona"
+    
+    @staticmethod
+    def output_file(title, suffix=".html"):
+        return (Path.output / title).with_suffix(suffix)
+
+
 class Visualizer:
     def __init__(self, args):
         self.args = args
-        self.output_folder = args.output_folder or Path.docs / "Other" / Path(__file__).parent.name
-        self.output_folder.mkdir(parents=True, exist_ok=True)
         self.data_items = {
             "tests": {"cases": "TESTS_ALL_POS"},
             "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"}
@@ -47,7 +53,7 @@ class Visualizer:
     def open_visualizations(self):
         urls = [
             *(
-                str((self.output_folder / title).with_suffix(".html")) for data_item in self.data_items.values() for title in data_item
+                str(Path.output_file(title)) for data_item in self.data_items.values() for title in data_item
             ),
             "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
             "https://covid-vaccinatie.be/en",
@@ -56,8 +62,9 @@ class Visualizer:
             Cli.run("chromium " + " ".join(urls), wait=False)
         else:
             Cli.start(urls)
-
-    def make_visualization(self, title, values):
+    
+    @staticmethod
+    def make_visualization(title, values):
         x = list(values.keys())
         y = list(values.values())
         y_avg = get_averages(y)
@@ -82,11 +89,9 @@ class Visualizer:
         ax.yaxis.set_minor_formatter(formatter)
         ax.grid(axis="y")
 
-        output_file = (self.output_folder / title).with_suffix(".png")
-        fig.savefig(output_file)
-        output_file.with_suffix(".html").write_text(
-            f'<img src="{title}.png" style="width:100%">'
-        )
+        filename = Path.output_file(title, suffix=".png")
+        fig.savefig(filename)
+        Path.output_file(title).write_text(f'<img src="{filename.name}" style="width:100%">')
 
 
     def parse_dict(self, data, key):
