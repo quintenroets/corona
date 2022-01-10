@@ -1,14 +1,12 @@
-import json
 from datetime import datetime, timedelta
+import downloader
 import matplotlib.pyplot as plt
 from matplotlib import ticker as mticker
 import numpy as np
 from plib import Path as BasePath
-import requests
 
 from libs.cli import Cli
 from libs.progressbar import ProgressBar
-from libs.threading import Threads
 
 
 class Path(BasePath):
@@ -22,43 +20,39 @@ class Path(BasePath):
 class Visualizer:
     def __init__(self, args):
         self.args = args
-        self.data_items = {
-            "tests": {"cases": "TESTS_ALL_POS"},
-            "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"}
-            }
-        self.data = {}
         
     def visualize(self):
         with ProgressBar("Corona"):
             self.start_visualization()
 
-    def get_data(self, name):
-        url = f"https://epistat.sciensano.be/Data/COVID19BE_{name}.json"
-        r = requests.get(url)
-        self.data[name] = json.loads(r.content) if r.status_code == 200 else None
-
     def start_visualization(self):
-        Threads(self.get_data, self.data_items.keys()).join()
-        
-        for data_name, data_info in self.data_items.items():
+        data_items = {
+            "tests": {"cases": "TESTS_ALL_POS"},
+            "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"}
+            }
+        urls = [f"https://epistat.sciensano.be/Data/COVID19BE_{name}.json" for name in data_items.keys()]
+        dests = downloader.download_urls(urls, dest=Path.output)
+        for dest in dests:
+            # new versions only have additional content at the end instead of closing "]"
+            dest.with_suffix(dest.suffix + ".part").text = dest.text[:-2]
+            
+        for data_info, dest in zip(data_items.values(), dests):
             for title, key in data_info.items():
-                if self.data[data_name] is not None:
-                    data = self.parse_dict(self.data[data_name], key)
-                    self.make_visualization(title, data)
-                else:
-                    print(f"{title} not available")
+                data = self.load_data(dest, key)
+                Visualizer.make_visualization(title, data)
         
-        self.open_visualizations()
+        output_files = [Path.output_file(title) for data_item in data_items.values() for title in data_item]
+        Visualizer.open_visualizations(output_files)
                     
-    def open_visualizations(self):
+    @staticmethod
+    def open_visualizations(output_files):
         urls = [
-            *(
-                str(Path.output_file(title)) for data_item in self.data_items.values() for title in data_item
-            ),
+            *output_files
             "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
             "https://covid-vaccinatie.be/en",
         ]
         if Cli.get("which chromium", check=False):
+            urls = [f'"{url}"' for url in urls]
             Cli.run("chromium " + " ".join(urls), wait=False)
         else:
             Cli.start(urls)
@@ -92,9 +86,10 @@ class Visualizer:
         filename = Path.output_file(title, suffix=".png")
         fig.savefig(filename)
         Path.output_file(title).write_text(f'<img src="{filename.name}" style="width:100%">')
-
-
-    def parse_dict(self, data, key):
+        
+    def load_data(self, name, key):
+        data = (Path.output / name).json
+        
         date_format = '%Y-%m-%d'
         start_date = datetime.strptime(self.args.start_date, date_format)
         today = datetime.today()
