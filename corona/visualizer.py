@@ -47,7 +47,7 @@ class Visualizer:
     @staticmethod
     def open_visualizations(output_files):
         urls = [
-            *output_files
+            *output_files,
             "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
             "https://covid-vaccinatie.be/en",
         ]
