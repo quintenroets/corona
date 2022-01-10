@@ -31,7 +31,7 @@ class Visualizer:
             "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"}
             }
         urls = [f"https://epistat.sciensano.be/Data/COVID19BE_{name}.json" for name in data_items.keys()]
-        dests = downloader.download_urls(urls, dest=Path.output)
+        dests = downloader.download_urls(urls, folder=Path.output)
         for dest in dests:
             # new versions only have additional content at the end instead of closing "]"
             dest.with_suffix(dest.suffix + ".part").text = dest.text[:-2]
