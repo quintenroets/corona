@@ -34,7 +34,7 @@ class Visualizer:
         dests = downloader.download_urls(urls, folder=Path.output)
         for dest in dests:
             # new versions only have additional content at the end instead of closing "]"
-            dest.with_suffix(dest.suffix + ".part").text = dest.text[:-2]
+            dest.with_suffix(dest.suffix + ".part").text = dest.text[:-5000]
             
         for data_info, dest in zip(data_items.values(), dests):
             for title, key in data_info.items():
