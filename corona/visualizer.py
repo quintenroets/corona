@@ -1,11 +1,13 @@
-from datetime import datetime, timedelta
+import cli
 import downloader
 import matplotlib.pyplot as plt
-from matplotlib import ticker as mticker
 import numpy as np
+import sh
+
+from datetime import datetime, timedelta
+from matplotlib import ticker as mticker
 from plib import Path as BasePath
 
-from libs.cli import Cli
 from libs.progressbar import ProgressBar
 
 
@@ -51,11 +53,10 @@ class Visualizer:
             "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
             "https://covid-vaccinatie.be/en",
         ]
-        if Cli.get("which chromium", check=False):
-            urls = [f'"{url}"' for url in urls]
-            Cli.run("chromium " + " ".join(urls), wait=False)
-        else:
-            Cli.start(urls)
+        try:
+            sh.chromium(urls)
+        except sh.CommandNotFound:
+            cli.urlopen(urls)
     
     @staticmethod
     def make_visualization(title, values):

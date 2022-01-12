@@ -1,6 +1,5 @@
 import argparse
-
-from libs.errorhandler import ErrorHandler
+import cli
 
 from .visualizer import Visualizer
 
@@ -12,7 +11,7 @@ def main():
     parser.add_argument('--province', default=None, help='Only visualize specified province if specified [WestVlaanderen, ..]')
     args = parser.parse_args()
     
-    with ErrorHandler():
+    with cli.errorhandler():
         Visualizer(args).visualize()
     
 if __name__ == "__main__":
