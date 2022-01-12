@@ -1,6 +1,5 @@
 matplotlib
 requests
-sh
 
 cli @ git+https://github.com/quintenroets/cli
 downloader @ git+https://github.com/quintenroets/downloader

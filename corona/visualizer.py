@@ -2,7 +2,6 @@ import cli
 import downloader
 import matplotlib.pyplot as plt
 import numpy as np
-import sh
 
 from datetime import datetime, timedelta
 from matplotlib import ticker as mticker
@@ -54,8 +53,8 @@ class Visualizer:
             "https://covid-vaccinatie.be/en",
         ]
         try:
-            sh.chromium(urls)
-        except sh.CommandNotFound:
+            cli.start(('chromium', urls))
+        except FileNotFoundError:
             cli.urlopen(urls)
     
     @staticmethod
