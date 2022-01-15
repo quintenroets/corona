@@ -53,9 +53,9 @@ class Visualizer:
             "https://covid-vaccinatie.be/en",
         ]
         try:
-            cli.start(('chromium', urls))
+            cli.start('chromium', urls)
         except FileNotFoundError:
-            cli.urlopen(urls)
+            cli.urlopen(*urls)
     
     @staticmethod
     def make_visualization(title, values):
