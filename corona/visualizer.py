@@ -11,10 +11,10 @@ from libs.progressbar import ProgressBar
 
 
 class Path(BasePath):
-    output = BasePath.docs / "Other" / "corona"
+    output = BasePath.docs / 'Other' / 'corona'
     
     @staticmethod
-    def output_file(title, suffix=".html"):
+    def output_file(title, suffix='.html'):
         return (Path.output / title).with_suffix(suffix)
 
 
@@ -23,19 +23,19 @@ class Visualizer:
         self.args = args
         
     def visualize(self):
-        with ProgressBar("Corona"):
+        with ProgressBar('Corona'):
             self.start_visualization()
 
     def start_visualization(self):
         data_items = {
-            "tests": {"cases": "TESTS_ALL_POS"},
-            "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"}
+            'tests': {'cases': 'TESTS_ALL_POS'},
+            'HOSP': {'hospitalisations': 'NEW_IN', 'ICU': 'TOTAL_IN_ICU'}
             }
-        urls = [f"https://epistat.sciensano.be/Data/COVID19BE_{name}.json" for name in data_items.keys()]
+        urls = [f'https://epistat.sciensano.be/Data/COVID19BE_{name}.json' for name in data_items.keys()]
         dests = downloader.download_urls(urls, folder=Path.output)
         for dest in dests:
-            # new versions only have additional content at the end instead of closing "]"
-            dest.with_suffix(dest.suffix + ".part").text = dest.text[:-5000]
+            # new versions only have additional content at the end instead of closing ']'
+            dest.with_suffix(dest.suffix + '.part').text = dest.text[:-5000]
             
         for data_info, dest in zip(data_items.values(), dests):
             for title, key in data_info.items():
@@ -49,8 +49,8 @@ class Visualizer:
     def open_visualizations(output_files):
         urls = [
             *output_files,
-            "https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf",
-            "https://covid-vaccinatie.be/en",
+            'https://covid-19.sciensano.be/sites/default/files/Covid19/Meest%20recente%20update.pdf',
+            'https://covid-vaccinatie.be/en',
         ]
         try:
             cli.start('chromium', urls)
@@ -66,8 +66,8 @@ class Visualizer:
         ratio = y_avg[-4] / y_avg[-11]
         change = round((ratio - 1) * 100)
         last_value = int(y_avg[-4])
-        change_str = f"+ {change}%" if change > 0 else f" - {-change}%"
-        fig_title = f"{title.capitalize()}: {last_value} ({change_str})"
+        change_str = f'+ {change}%' if change > 0 else f' - {-change}%'
+        fig_title = f'{title.capitalize()}: {last_value} ({change_str})'
         
         plt.switch_backend('agg') # needed because matplotlib runs in thread
         fig, ax = plt.subplots(figsize=(19, 9))
@@ -76,14 +76,14 @@ class Visualizer:
         ax.semilogy(x, y, color='green', linewidth=0.5)
         ax.semilogy(x, y_avg, color='black', linewidth=3)
         for index in [-4, -11]:
-            ax.plot(x[index], y_avg[index], marker='o', markersize=6, color="red")
+            ax.plot(x[index], y_avg[index], marker='o', markersize=6, color='red')
             
         formatter = mticker.ScalarFormatter()
         ax.yaxis.set_major_formatter(formatter)
         ax.yaxis.set_minor_formatter(formatter)
-        ax.grid(axis="y")
+        ax.grid(axis='y')
 
-        filename = Path.output_file(title, suffix=".png")
+        filename = Path.output_file(title, suffix='.png')
         fig.savefig(filename)
         Path.output_file(title).write_text(f'<img src="{filename.name}" style="width:100%">')
         
@@ -99,16 +99,16 @@ class Visualizer:
             }
         update_interval = (
             update_intervals.get(today.weekday(), 2) 
-            if key == "TESTS_ALL_POS" 
+            if key == 'TESTS_ALL_POS' 
             else 0 # hospitals updated immediately
         )
         now = today - timedelta(days=update_interval+1)
     
         parsed_dict = {}
         for sample in data:
-            date = datetime.strptime(sample["DATE"], date_format)
+            date = datetime.strptime(sample['DATE'], date_format)
             if start_date < date < now:
-                if self.args.province is None or sample.get("PROVINCE") == args.province:
+                if self.args.province is None or sample.get('PROVINCE') == args.province:
                     parsed_dict[date] = parsed_dict.get(date, 0) + sample[key] # accumulate data from various locations
                     
         parsed_dict = {k: v for k, v in parsed_dict.items() if v > 0}
