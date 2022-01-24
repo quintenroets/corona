@@ -3,5 +3,4 @@ requests
 
 cli @ git+https://github.com/quintenroets/cli
 downloader @ git+https://github.com/quintenroets/downloader
-libs @ git+https://github.com/quintenroets/libs
 superpathlib @ git+https://github.com/quintenroets/superpathlib

@@ -6,7 +6,6 @@ from matplotlib import ticker as mticker
 
 import cli
 import downloader
-from libs.progressbar import ProgressBar
 from plib import Path as BasePath
 
 
@@ -23,10 +22,6 @@ class Visualizer:
         self.args = args
 
     def visualize(self):
-        with ProgressBar("Corona"):
-            self.start_visualization()
-
-    def start_visualization(self):
         data_items = {
             "tests": {"cases": "TESTS_ALL_POS"},
             "HOSP": {"hospitalisations": "NEW_IN", "ICU": "TOTAL_IN_ICU"},
