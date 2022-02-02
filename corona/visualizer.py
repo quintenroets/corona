@@ -32,8 +32,9 @@ class Visualizer:
         ]
         dests = downloader.download_urls(urls, folder=Path.output)
         for dest in dests:
+            pass  # disable for now
             # new versions only have additional content at the end instead of closing ']'
-            dest.with_suffix(dest.suffix + ".part").text = dest.text[:-5000]
+            # dest.with_suffix(dest.suffix + ".part").text = dest.text[:-5000]
 
         for data_info, dest in zip(data_items.values(), dests):
             for title, key in data_info.items():
