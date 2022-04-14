@@ -10,7 +10,7 @@ from plib import Path as BasePath
 
 
 class Path(BasePath):
-    output = BasePath.docs / "Other" / "corona"
+    output = BasePath.assets / "corona"
 
     @staticmethod
     def output_file(title, suffix=".html"):
