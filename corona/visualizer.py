@@ -1,11 +1,10 @@
 from datetime import datetime, timedelta
 
+import cli
+import downloader
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib import ticker as mticker
-
-import cli
-import downloader
 from plib import Path as BasePath
 
 
