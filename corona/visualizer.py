@@ -97,12 +97,13 @@ class Visualizer:
         date_format = "%Y-%m-%d"
         start_date = datetime.strptime(self.args.start_date, date_format)
         today = datetime.today()
-        update_intervals = {0: 4, 6: 3}
-        update_interval = (
+        # update_intervals = {0: 4, 6: 3}
+        """update_interval = (
             update_intervals.get(today.weekday(), 2)
             if key == "TESTS_ALL_POS"
             else 0  # hospitals updated immediately
-        )
+        )"""
+        update_interval = 0
         now = today - timedelta(days=update_interval + 1)
 
         parsed_dict = {}
@@ -115,10 +116,22 @@ class Visualizer:
                 ):
                     parsed_dict[date] = (
                         parsed_dict.get(date, 0) + sample[key]
-                    )  # accumulate data from various locations
+                    )  # accumulate data from all regions
 
         parsed_dict = {k: v for k, v in parsed_dict.items() if v > 0}
+        parsed_dict = self.check_abnormal_changes(parsed_dict)
         return parsed_dict
+
+    @classmethod
+    def check_abnormal_changes(cls, info_dict):
+        values = list(info_dict.values())
+
+        while len(values) > 8 and values[-8] / values[-1] > 10:
+            keys = list(info_dict.keys())
+            info_dict.pop(keys[-1])
+            values = list(info_dict.values())
+
+        return info_dict
 
 
 def get_averages(items, N=7):
