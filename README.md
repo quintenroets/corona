@@ -12,7 +12,7 @@ The images below compare the script and sciensano visualization of the number of
 ## Installation
 
 ```shell
-pip install git+https://github.com/quintenroets/school
+pip install git+https://github.com/quintenroets/corona
 ```
 Developed for Linux OS
 
